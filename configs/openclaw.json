@@ -1,0 +1,45 @@
+{
+  "models": {
+    "providers": {
+      "minimax": {
+        "baseUrl": "https://api.minimax.io/v1",
+        "apiKey": "${MINIMAX_API_KEY}",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "MiniMax-M2.5",
+            "name": "MiniMax M2.5",
+            "reasoning": true,
+            "input": ["text"],
+            "cost": { "input": 0.3, "output": 1.2 },
+            "contextWindow": 204800,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "minimax/MiniMax-M2.5"
+      }
+    }
+  },
+  "channels": {
+    "feishu": {
+      "enabled": true,
+      "domain": "lark",
+      "appId": "${FEISHU_APP_ID}",
+      "appSecret": "${FEISHU_APP_SECRET}",
+      "connectionMode": "websocket",
+      "dmPolicy": "pairing",
+      "groupPolicy": "disabled",
+      "requireMention": true,
+      "streaming": true,
+      "blockStreaming": true,
+      "textChunkLimit": 2000,
+      "mediaMaxMb": 30
+    }
+  }
+}

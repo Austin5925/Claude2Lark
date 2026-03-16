@@ -1,0 +1,25 @@
+# Environment and secrets
+.env
+.env.local
+.env.production
+
+# OpenClaw local state
+.openclaw/
+.improvement-state/
+
+# Claude Code local state
+.claude/settings.local.json
+tasks/
+
+# MCP config (may contain secrets)
+.mcp.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+
+# Logs
+*.log
