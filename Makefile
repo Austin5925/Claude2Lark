@@ -13,6 +13,10 @@ sync: check
 	@echo "==> Syncing config to VPS..."
 	scp configs/openclaw.json $(VPS_HOST):$(OPENCLAW_HOME)/openclaw.json
 	scp .env $(VPS_HOST):$(OPENCLAW_HOME)/.env
+	ssh $(VPS_HOST) "mkdir -p $(OPENCLAW_HOME)/agents/main $(OPENCLAW_HOME)/memory"
+	scp configs/agent/BOOTSTRAP.md $(VPS_HOST):$(OPENCLAW_HOME)/agents/main/BOOTSTRAP.md
+	scp configs/agent/memory-safety-rules.md $(VPS_HOST):$(OPENCLAW_HOME)/memory/safety-rules.md
+	scp configs/agent/memory-identity.md $(VPS_HOST):$(OPENCLAW_HOME)/memory/identity.md
 	ssh $(VPS_HOST) "chmod 600 $(OPENCLAW_HOME)/openclaw.json $(OPENCLAW_HOME)/.env"
 	@echo "==> Config synced."
 
