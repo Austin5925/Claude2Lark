@@ -1,6 +1,7 @@
 {
   "gateway": {
     "mode": "local",
+    "bind": "loopback",
     "auth": {
       "mode": "token",
       "token": "${OPENCLAW_GATEWAY_TOKEN}"
@@ -40,13 +41,23 @@
       "appId": "${FEISHU_APP_ID}",
       "appSecret": "${FEISHU_APP_SECRET}",
       "connectionMode": "websocket",
-      "dmPolicy": "pairing",
+      "dmPolicy": "allowlist",
+      "dmAllowlist": ["${FEISHU_ALLOWED_USER_ID}"],
       "groupPolicy": "disabled",
       "requireMention": true,
       "streaming": true,
       "blockStreaming": true,
       "textChunkLimit": 2000,
-      "mediaMaxMb": 30
+      "mediaMaxMb": 30,
+      "uat": {
+        "enabled": true
+      },
+      "tools": {
+        "doc": true,
+        "wiki": true,
+        "drive": true,
+        "perm": false
+      }
     }
   }
 }
