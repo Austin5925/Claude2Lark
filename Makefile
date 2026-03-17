@@ -1,6 +1,6 @@
 .PHONY: deploy check sync restart status logs
 
-VPS_HOST ?= openclaw
+VPS_HOST ?= openclaw2
 OPENCLAW_HOME ?= /root/.openclaw
 
 check:

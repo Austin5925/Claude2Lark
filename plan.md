@@ -166,29 +166,24 @@
 
 ### 阶段一：环境准备
 
-- [ ] **1.1 VPS 环境检查**
-  - [ ] SSH 登录 Hetzner VPS
-  - [ ] 确认系统版本（需要 Ubuntu 20.04+）
-  - [ ] 确认内存 >= 1GB（推荐 2GB+）
-  - [ ] 确认磁盘剩余空间 >= 2GB
+- [x] **1.1 VPS 环境检查**
+  - [x] SSH 登录 Hetzner VPS (46.224.44.160, ssh openclaw2)
+  - [x] 确认系统版本：Ubuntu 24.04.3 LTS
+  - [x] 确认内存：7.6 GB
+  - [x] 确认磁盘：71 GB 可用
 
-- [ ] **1.2 安装 Node.js 22**
-  - [ ] 检查当前 Node.js 版本（`node -v`）
-  - [ ] 如需升级：`curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && apt-get install -y nodejs`
-  - [ ] 验证：`node -v` 应显示 v22.x.x
-  - [ ] 验证 npm：`npm -v`
+- [x] **1.2 安装 Node.js 22**
+  - [x] Node.js v22.22.1 已安装
+  - [x] npm 10.9.4 已安装
 
-- [ ] **1.3 安装 OpenClaw**
-  - [ ] `npm install -g openclaw@latest`
-  - [ ] 验证：`openclaw --version`
-  - [ ] 记录安装路径
+- [x] **1.3 安装 OpenClaw**
+  - [x] OpenClaw 2026.3.13 已安装
+  - [x] systemd 服务已配置（`openclaw gateway run` 前台模式）
 
-- [ ] **1.4 注册 MiniMax 开发者账号**
-  - [ ] 访问 https://platform.minimax.io
-  - [ ] 注册账号
-  - [ ] 创建 API Key
-  - [ ] 安全记录 API Key（后续需要）
-  - [ ] 确认账户有余额 / 免费额度
+- [x] **1.4 注册 MiniMax 开发者账号**
+  - [x] 使用 platform.minimaxi.com（国内平台）
+  - [x] Coding Plan API Key (sk-cp-) 已获取
+  - [x] 注意：Coding Plan key 使用 Anthropic 兼容端点 `https://api.minimaxi.com/anthropic`
 
 ### 阶段二：Lark 应用创建
 
@@ -255,66 +250,30 @@
 
 ### 阶段三：OpenClaw 配置
 
-- [ ] **3.1 运行 OpenClaw 入门向导**
-  - [ ] 在 VPS 上运行 `openclaw onboard`
-  - [ ] 或手动创建配置文件 `~/.openclaw/openclaw.json`
+- [x] **3.1 运行 OpenClaw 入门向导**
+  - [x] 手动创建配置文件 `~/.openclaw/openclaw.json`
+  - [x] 配置 `gateway.mode: "local"` 用于 VPS 前台运行
 
-- [ ] **3.2 配置 MiniMax Provider**
-  - [ ] 设置环境变量：`export MINIMAX_API_KEY="your-key"`
-  - [ ] 在 `openclaw.json` 中配置 MiniMax Provider：
-    ```json5
-    {
-      models: {
-        providers: {
-          minimax: {
-            baseUrl: "https://api.minimax.io/v1",
-            apiKey: "${MINIMAX_API_KEY}",
-            api: "openai-completions",
-          },
-        },
-      },
-      agents: {
-        defaults: {
-          model: {
-            primary: "minimax/MiniMax-M2.5",
-          },
-        },
-      },
-    }
-    ```
-  - [ ] 验证 MiniMax API 连通性
+- [x] **3.2 配置 MiniMax Provider**
+  - [x] .env 中设置 `MINIMAX_API_KEY`
+  - [x] 发现：Coding Plan key 需要 Anthropic 兼容端点
+  - [x] 正确配置：`baseUrl: "https://api.minimaxi.com/anthropic"`, `api: "anthropic-messages"`
+  - [x] API 连通性已验证（curl 测试成功）
 
-- [ ] **3.3 配置 Lark Channel**
-  - [ ] 在 `openclaw.json` 中添加 Feishu channel 配置：
-    ```json5
-    {
-      channels: {
-        feishu: {
-          enabled: true,
-          domain: "lark",
-          appId: "cli_xxx",
-          appSecret: "xxx",
-          connectionMode: "websocket",
-          dmPolicy: "allowlist",
-          groupPolicy: "disabled",
-          requireMention: true,
-          streaming: true,
-          blockStreaming: true,
-        },
-      },
-    }
-    ```
-  - [ ] ⚠️ 如果 WebSocket 失败，改为 `"connectionMode": "webhook"` 并配置回调 URL
+- [x] **3.3 配置 Lark Channel**
+  - [x] Feishu channel 已配置（`domain: "lark"`, `connectionMode: "websocket"`）
+  - [x] WebSocket 在 Lark 国际版上**可用**（日志确认 `ws client ready`）
+  - [x] 所有 Lark 工具已注册：feishu_doc, feishu_chat, feishu_wiki, feishu_drive, feishu_bitable
+  - [ ] ⚠️ 待完成：Lark 控制台需配置事件订阅和补充权限
 
-- [ ] **3.4 配置访问控制**
-  - [ ] 获取你和女朋友的 Lark Open ID（`ou_xxx`）
-  - [ ] 配置 `dmPolicy: "allowlist"` 或 `"pairing"`
-  - [ ] 如使用 allowlist，添加允许的 Open ID
+- [x] **3.4 配置访问控制**
+  - [x] 初始策略设为 `dmPolicy: "pairing"`（配对码模式）
+  - [ ] 待完成：获取 Open ID 后切换为 allowlist
 
-- [ ] **3.5 安全配置**
-  - [ ] 生成 Gateway Token：`openssl rand -hex 32`
-  - [ ] 设置文件权限：`chmod 700 ~/.openclaw && chmod 600 ~/.openclaw/openclaw.json`
-  - [ ] 将 API Key 和 App Secret 从配置文件移到环境变量中
+- [x] **3.5 安全配置**
+  - [x] Gateway Token 已生成并配置
+  - [x] 文件权限已设置（chmod 600）
+  - [x] 所有凭据通过 .env 环境变量引用，不硬编码
 
 ### 阶段四：首次启动和测试
 
@@ -374,7 +333,7 @@
 
 ### 阶段五：持久化运行
 
-- [ ] **5.1 配置 systemd 服务**
+- [x] **5.1 配置 systemd 服务**
   - [ ] 创建 `/etc/systemd/system/openclaw.service`：
 
     ```ini
@@ -397,10 +356,10 @@
     WantedBy=multi-user.target
     ```
 
-  - [ ] `systemctl daemon-reload`
-  - [ ] `systemctl enable openclaw`
-  - [ ] `systemctl start openclaw`
-  - [ ] `systemctl status openclaw`
+  - [x] `systemctl daemon-reload`
+  - [x] `systemctl enable openclaw`
+  - [x] `systemctl start openclaw`
+  - [x] `systemctl status openclaw` — active (running)
 
 - [ ] **5.2 创建专用系统用户**
   - [ ] `useradd -r -m -s /bin/bash openclaw`

@@ -53,7 +53,7 @@ Lark Client → Lark Open Platform (WebSocket/Webhook)
 - **Lark domain:** Must be `"lark"` (NOT `"feishu"`) — target is Lark international
 - **App created at:** `https://open.larksuite.com/app` (NOT `open.feishu.cn`)
 - **Connection mode:** Try WebSocket first; fallback to Webhook if Lark intl doesn't support WS
-- **MiniMax API:** `https://api.minimax.io/v1`, OpenAI-compatible format
+- **MiniMax API:** `https://api.minimaxi.com/anthropic` (Anthropic-compatible, Coding Plan key `sk-cp-`)
 
 ## Commands
 
@@ -107,7 +107,9 @@ Claude2Lark/
 
 ## MiniMax M2.5 Notes
 
-- **Pricing:** $0.30 input / $1.20 output per M tokens (~1/10 of Claude Sonnet)
+- **Pricing:** Coding Plan 月订阅（非按量计费）
 - **Tool calling:** BFCL 76.8% (outperforms Claude's 63.3%)
 - **OpenClaw model ID:** `minimax/MiniMax-M2.5`
+- **API endpoint:** `https://api.minimaxi.com/anthropic` (国内平台，Anthropic 兼容)
+- **Key prefix:** `sk-cp-` (Coding Plan 专用)
 - **No vision:** Text-only input — cannot process images sent in Lark
