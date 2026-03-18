@@ -198,26 +198,45 @@
 
 - [ ] **2.2 配置应用权限（最小化，仅 P2P + UAT）**
   - [ ] 进入 Permissions & Scopes 页面
-  - [ ] 添加 10 个必需的应用级权限：
-    - [ ] `im:message.p2p_msg:readonly` — 接收私聊消息
-    - [ ] `im:message:send_as_bot` — 发送回复
-    - [ ] `im:message:readonly` — 读取消息内容
-    - [ ] `im:message:update` — 更新流式卡片
-    - [ ] `im:resource` — 处理图片/文件消息
-    - [ ] `cardkit:card:write` — 输出流式卡片
-    - [ ] `cardkit:card:read` — 卡片交互
-    - [ ] `application:application:self_manage` — 应用自身管理
-    - [ ] `contact:contact.base:readonly` — 用户搜索
-    - [ ] `docx:document:readonly` — 文档读取（UAT 前提 scope）
-  - [ ] ⚠️ 已移除 11 个超出 P2P 对话的权限：
-    - ~~`im:message.group_at_msg:readonly`~~ — 群组已禁用
-    - ~~`im:chat:read`~~ / ~~`im:chat:update`~~ — 群组已禁用，Bot 不应修改聊天设置
-    - ~~`im:message:recall`~~ — Bot 不应能撤回消息
-    - ~~`im:message.pins:read`~~ / ~~`im:message.pins:write_only`~~ — 不需要置顶功能
-    - ~~`im:message.reactions:read`~~ / ~~`im:message.reactions:write_only`~~ — 不需要表情回应
-    - ~~`im:message:send_multi_users`~~ — 仅一个用户
-    - ~~`im:message:send_sys_msg`~~ — 不需要系统消息
-  - [ ] 文档/多维表格/日历/任务的读写权限通过 UAT OAuth 授权获取（镜像女朋友个人权限）
+  - [ ] 使用「批量导入」粘贴以下 JSON（基于 OpenClaw 官方推荐，已移除群组相关权限）：
+    ```json
+    {
+      "scopes": {
+        "tenant": [
+          "aily:file:read",
+          "aily:file:write",
+          "application:application:self_manage",
+          "application:bot.menu:write",
+          "cardkit:card:write",
+          "contact:user.employee_id:readonly",
+          "docs:document.content:read",
+          "event:ip_list",
+          "im:chat.access_event.bot_p2p_chat:read",
+          "im:message",
+          "im:message.p2p_msg:readonly",
+          "im:message:readonly",
+          "im:message:send_as_bot",
+          "im:resource",
+          "sheets:spreadsheet",
+          "wiki:wiki:readonly"
+        ],
+        "user": [
+          "aily:file:read",
+          "aily:file:write",
+          "im:chat.access_event.bot_p2p_chat:read"
+        ]
+      }
+    }
+    ```
+  - [ ] 共 16 个应用级 + 3 个用户级（官方推荐 22+3，已移除 6 个群组/非必要权限）
+  - [ ] ⚠️ 已移除的 6 个权限（对比 OpenClaw 官方推荐）：
+    - ~~`im:message.group_at_msg:readonly`~~ — 群组 @消息（groupPolicy disabled）
+    - ~~`im:message.group_msg`~~ — 群组消息（groupPolicy disabled）
+    - ~~`im:chat`~~ — 聊天管理含群组（不需要）
+    - ~~`im:chat.members:bot_access`~~ — 聊天成员访问（不需要）
+    - ~~`corehr:file:download`~~ — HR 文件下载（不需要）
+    - ~~`application:application.app_message_stats.overview:readonly`~~ — 统计（不需要）
+  - [ ] 文档/多维表格/日历/任务的读写权限通过 UAT OAuth 授权获取（镜像用户个人权限）
 
 - [ ] **2.3 启用 Bot 功能**
   - [ ] 进入 Add Features 页面
