@@ -102,8 +102,9 @@ Claude2Lark/
 
 - **Lark vs Feishu:** Same API spec, different domains. Apps are NOT cross-compatible.
 - **WebSocket uncertainty:** Some community reports claim Lark intl doesn't support WS long-connection. Test first, have Webhook fallback ready.
-- **Required app permissions:** 20 app-level scopes + 66 user-level scopes (see research.md section 5.5)
+- **Required app permissions:** 10 app-level scopes (P2P only, no group/recall/pin) + user-level scopes via UAT OAuth (see plan.md section 2.2)
 - **openclaw-lark tools:** 98 actions across IM, Docs, Bitable (27 CRUD actions), Sheets, Calendar, Tasks, Drive, Wiki, Search
+- **ClaWHub skills:** `weather` (@steipete), `markdown-converter` (@steipete) — installed on VPS
 
 ## MiniMax M2.5 Notes
 

@@ -196,29 +196,28 @@
   - [ ] 记录 **App ID**（`cli_xxxxxxxxxx`）
   - [ ] 记录 **App Secret**
 
-- [ ] **2.2 配置应用权限**
+- [ ] **2.2 配置应用权限（最小化，仅 P2P + UAT）**
   - [ ] 进入 Permissions & Scopes 页面
-  - [ ] 添加 20 个必需的应用级权限：
-    - [ ] `im:message.group_at_msg:readonly`
-    - [ ] `im:message.p2p_msg:readonly`
-    - [ ] `im:message:send_as_bot`
-    - [ ] `im:message:readonly`
-    - [ ] `im:message:update`
-    - [ ] `im:message:recall`
-    - [ ] `im:resource`
-    - [ ] `im:chat:read`
-    - [ ] `im:chat:update`
-    - [ ] `im:message.pins:read`
-    - [ ] `im:message.pins:write_only`
-    - [ ] `im:message.reactions:read`
-    - [ ] `im:message.reactions:write_only`
-    - [ ] `im:message:send_multi_users`
-    - [ ] `im:message:send_sys_msg`
-    - [ ] `cardkit:card:write`
-    - [ ] `cardkit:card:read`
-    - [ ] `application:application:self_manage`
-    - [ ] `contact:contact.base:readonly`
-    - [ ] `docx:document:readonly`
+  - [ ] 添加 10 个必需的应用级权限：
+    - [ ] `im:message.p2p_msg:readonly` — 接收私聊消息
+    - [ ] `im:message:send_as_bot` — 发送回复
+    - [ ] `im:message:readonly` — 读取消息内容
+    - [ ] `im:message:update` — 更新流式卡片
+    - [ ] `im:resource` — 处理图片/文件消息
+    - [ ] `cardkit:card:write` — 输出流式卡片
+    - [ ] `cardkit:card:read` — 卡片交互
+    - [ ] `application:application:self_manage` — 应用自身管理
+    - [ ] `contact:contact.base:readonly` — 用户搜索
+    - [ ] `docx:document:readonly` — 文档读取（UAT 前提 scope）
+  - [ ] ⚠️ 已移除 11 个超出 P2P 对话的权限：
+    - ~~`im:message.group_at_msg:readonly`~~ — 群组已禁用
+    - ~~`im:chat:read`~~ / ~~`im:chat:update`~~ — 群组已禁用，Bot 不应修改聊天设置
+    - ~~`im:message:recall`~~ — Bot 不应能撤回消息
+    - ~~`im:message.pins:read`~~ / ~~`im:message.pins:write_only`~~ — 不需要置顶功能
+    - ~~`im:message.reactions:read`~~ / ~~`im:message.reactions:write_only`~~ — 不需要表情回应
+    - ~~`im:message:send_multi_users`~~ — 仅一个用户
+    - ~~`im:message:send_sys_msg`~~ — 不需要系统消息
+  - [ ] 文档/多维表格/日历/任务的读写权限通过 UAT OAuth 授权获取（镜像女朋友个人权限）
 
 - [ ] **2.3 启用 Bot 功能**
   - [ ] 进入 Add Features 页面
@@ -230,9 +229,9 @@
   - [ ] 进入 Events & Callbacks 页面
   - [ ] Subscription Method 选择 **Long Connection (WebSocket)**
     - ⚠️ 如果 Lark 国际版不提供此选项，记录并准备切换 Webhook
-  - [ ] 添加事件：`im.message.receive_v1`
-  - [ ] （可选）添加事件：`im.message.reaction.created_v1`
-  - [ ] （可选）添加事件：`im.chat.member.bot.added_v1`
+  - [ ] 添加事件：`im.message.receive_v1`（唯一必需事件）
+  - [ ] ~~`im.message.reaction.created_v1`~~ — 已移除（reaction 权限已删除）
+  - [ ] ~~`im.chat.member.bot.added_v1`~~ — 已移除（groupPolicy disabled）
 
 - [ ] **2.5 设置可见范围**
   - [ ] 进入 Availability 页面
@@ -451,10 +450,13 @@
   - [ ] 配置 `groupPolicy: "allowlist"` 和 `requireMention: true`
   - [ ] 为不同群组配置不同权限和系统提示
 
-- [ ] **9.2 额外 Skills**
-  - [ ] 浏览 ClawHub（clawhub.com）技能市场
-  - [ ] 安装有用的额外技能
-  - [ ] 测试技能兼容性
+- [x] **9.2 额外 Skills**
+  - [x] 浏览 ClawHub 技能市场
+  - [x] 卸载 `lark-calendar`（boyangwang 的第三方日历 skill，含硬编码数据）
+  - [x] 安装 `weather`（@steipete，天气查询，无需 API key）
+  - [x] 安装 `markdown-converter`（@steipete，uvx markitdown，支持 PDF/Word/Excel 等）
+  - [x] 已放弃 `summarize`（需 brew + 外部 LLM API key，不适合当前安全策略）
+  - [x] 注：Anthropic 官方 skills 不在 ClaWHub，仅发布在 GitHub（anthropics/skills），面向 Claude Code
 
 - [ ] **9.3 Docker 沙箱**
   - [ ] 如需增强安全性，启用 Docker 沙箱
