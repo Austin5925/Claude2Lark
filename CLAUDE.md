@@ -43,7 +43,7 @@ Lark Client → Lark Open Platform (WebSocket/Webhook)
 | Component | Role | Config Location |
 |-----------|------|-----------------|
 | OpenClaw Gateway | Agent runtime, channel management | `~/.openclaw/openclaw.json` |
-| openclaw-lark | Lark channel + 98 tool actions | Bundled in OpenClaw |
+| openclaw-lark | Lark channel + 99 tool actions (UAT) | `@larksuite/openclaw-lark@2026.3.17` |
 | MiniMax M2.5 | LLM backend (tool calling, reasoning) | Provider config in openclaw.json |
 | Lark App | Bot identity, permissions, events | open.larksuite.com |
 | systemd | Process management | `/etc/systemd/system/openclaw.service` |
@@ -102,7 +102,7 @@ Claude2Lark/
 
 - **Lark vs Feishu:** Same API spec, different domains. Apps are NOT cross-compatible.
 - **WebSocket uncertainty:** Some community reports claim Lark intl doesn't support WS long-connection. Test first, have Webhook fallback ready.
-- **Required app permissions:** 10 app-level scopes (P2P only, no group/recall/pin) + user-level scopes via UAT OAuth (see plan.md section 2.2)
+- **Required app permissions:** 7 tenant scopes (bot messaging only) + 67 user scopes via UAT OAuth (see docs/lark-permission-request.md)
 - **openclaw-lark tools:** 98 actions across IM, Docs, Bitable (27 CRUD actions), Sheets, Calendar, Tasks, Drive, Wiki, Search
 - **ClaWHub skills:** `weather` (@steipete), `markdown-converter` (@steipete) — installed on VPS
 

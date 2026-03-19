@@ -59,5 +59,16 @@
         "perm": false
       }
     }
+  },
+  "plugins": {
+    "entries": {
+      "feishu": {
+        "enabled": false
+      },
+      "openclaw-lark": {
+        "enabled": true
+      }
+    },
+    "allow": ["openclaw-lark"]
   }
 }
